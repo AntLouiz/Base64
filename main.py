@@ -9,7 +9,7 @@ numbers = list(str(n) for n in range(10))
 alphabet_base_64 = ascii_uppercase + ascii_lowercase + numbers + specials
 
 
-def to_base64(word):
+def encode_base64(word):
     binaries = [format(ord(c), '08b') for c in word]
     word_binary_len = sum([len(b) for b in binaries])
     if word_binary_len < 24:
@@ -26,7 +26,7 @@ def to_base64(word):
 
 def main():
     word = str(input('Insira uma palavra para ser codificada: '))
-    cod_word = to_base64(word)
+    cod_word = encode_base64(word)
     print(cod_word)
 
 
