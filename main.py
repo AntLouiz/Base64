@@ -38,6 +38,11 @@ def main():
     cod_word = encode_base64(word)
     decode_word = decode_base64(cod_word)
 
+    print("Palavra criptografada: {}\nPalavra descriptografada: {}".format(
+        cod_word,
+        decode_word
+    ))
+
 
 if __name__ == '__main__':
     main()
