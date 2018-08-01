@@ -24,10 +24,19 @@ def encode_base64(word):
     return ''.join(cod_word)
 
 
+def decode_base64(hash_text):
+    binaries = ['{:06b}'.format(alphabet_base_64.index(w)) for w in hash_text]
+    binaries = ''.join(binaries)
+    binaries = wrap(binaries, 8)
+    word = [chr(int(b, 2)) for b in binaries]
+
+    return ''.join(word)
+
+
 def main():
     word = str(input('Insira uma palavra para ser codificada: '))
     cod_word = encode_base64(word)
-    print(cod_word)
+    decode_word = decode_base64(cod_word)
 
 
 if __name__ == '__main__':
