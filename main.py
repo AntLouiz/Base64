@@ -45,12 +45,21 @@ def encode_base64(word):
 
 
 def decode_base64(hash_text):
-    binaries = ['{:06b}'.format(alphabet_base_64.index(w)) for w in hash_text]
+    binaries = []
+    decoded_word = []
+
+    for h in hash_text:
+        decimal = alphabet_base_64.index(h)
+        binarie = '{:06b}'.format(decimal)
+        binaries.append(binarie)
+
     binaries = ''.join(binaries)
     binaries = wrap(binaries, 8)
-    word = [chr(int(b, 2)) for b in binaries]
 
-    return ''.join(word)
+    for b in binaries:
+        decoded_word.append(chr(int(b, 2)))
+
+    return ''.join(decoded_word)
 
 
 def main():
