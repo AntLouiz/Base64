@@ -17,18 +17,29 @@ alphabet_base_64 = ascii_uppercase + ascii_lowercase + numbers + specials
 
 
 def encode_base64(word):
-    binaries = [format(ord(c), '08b') for c in word]
     binaries = []
+    word_binary_len = 0
+    cod_word = []
 
-    word_binary_len = sum([len(b) for b in binaries])
+    for w in word:
+        word_binarie = format(ord(w), '08b')
+        binaries.append(word_binarie)
+
+    for b in binaries:
+        word_binary_len += len(b)
+
     if word_binary_len < 24:
         binaries = ''.join(binaries)
         binaries = '{:024d}'.format(int(binaries))
+
     else:
         binaries = ''.join(binaries)
 
     binaries = wrap(binaries, 6)
-    cod_word = [alphabet_base_64[int(b, 2)] for b in binaries]
+
+    for b in binaries:
+        decimal = int(b, 2)
+        cod_word.append(alphabet_base_64[decimal])
 
     return ''.join(cod_word)
 
