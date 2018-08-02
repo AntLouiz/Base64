@@ -2,8 +2,6 @@ import os
 import string
 from textwrap import wrap
 
-# muratessdono@outlook.com
-
 # alfabeto com letras maiusculas
 ascii_uppercase = list(string.ascii_uppercase)
 
