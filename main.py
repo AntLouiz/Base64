@@ -1,9 +1,16 @@
 import string
 from textwrap import wrap
 
+# alfabeto com letras maiusculas
 ascii_uppercase = list(string.ascii_uppercase)
+
+# alfabeto om letras minusculas
 ascii_lowercase = list(string.ascii_lowercase)
+
+# barra e o caractere de adiçao
 specials = ['/', '+']
+
+# numeros de 0 a 9
 numbers = list(str(n) for n in range(10))
 
 alphabet_base_64 = ascii_uppercase + ascii_lowercase + numbers + specials
@@ -11,6 +18,8 @@ alphabet_base_64 = ascii_uppercase + ascii_lowercase + numbers + specials
 
 def encode_base64(word):
     binaries = [format(ord(c), '08b') for c in word]
+    binaries = []
+
     word_binary_len = sum([len(b) for b in binaries])
     if word_binary_len < 24:
         binaries = ''.join(binaries)
