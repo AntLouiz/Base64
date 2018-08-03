@@ -1,3 +1,4 @@
+import os
 import string
 from textwrap import wrap
 
@@ -11,46 +12,72 @@ ascii_lowercase = list(string.ascii_lowercase)
 specials = ['/', '+']
 
 # numeros de 0 a 9
-numbers = list(str(n) for n in range(10))
+numbers = []
+for n in range(10):
+    numbers.append(str(n))
 
 alphabet_base_64 = ascii_uppercase + ascii_lowercase + numbers + specials
 
 
 def encode_base64(word):
-    binaries = [format(ord(c), '08b') for c in word]
     binaries = []
+    word_binary_len = 0
+    cod_word = []
 
-    word_binary_len = sum([len(b) for b in binaries])
+    # percorrendo a palavra
+    for w in word:
+        word_number_ascii = ord(w)
+        word_binarie = format(word_number_ascii, '08b')
+        binaries.append(word_binarie)
+
+    for b in binaries:
+        word_binary_len += len(b)
+
     if word_binary_len < 24:
         binaries = ''.join(binaries)
         binaries = '{:024d}'.format(int(binaries))
+
     else:
         binaries = ''.join(binaries)
 
+    # separa em grupos de 6 bits
     binaries = wrap(binaries, 6)
-    cod_word = [alphabet_base_64[int(b, 2)] for b in binaries]
+
+    for b in binaries:
+        decimal = int(b, 2)
+        cod_word.append(alphabet_base_64[decimal])
 
     return ''.join(cod_word)
 
 
 def decode_base64(hash_text):
-    binaries = ['{:06b}'.format(alphabet_base_64.index(w)) for w in hash_text]
+    binaries = []
+    decoded_word = []
+
+    for h in hash_text:
+        decimal = alphabet_base_64.index(h)
+        binarie = '{:06b}'.format(decimal)
+        binaries.append(binarie)
+
     binaries = ''.join(binaries)
     binaries = wrap(binaries, 8)
-    word = [chr(int(b, 2)) for b in binaries]
 
-    return ''.join(word)
+    for b in binaries:
+        integer_word = int(b, 2)
+        decoded_word.append(chr(integer_word))
+
+    return ''.join(decoded_word)
 
 
 def main():
-    word = str(input('Insira uma palavra para ser codificada: '))
-    cod_word = encode_base64(word)
-    decode_word = decode_base64(cod_word)
+    filename = 'test.txt'
+    with open(filename, 'r') as file:
+        text_encoded = encode_base64(file.read())
 
-    print("Palavra criptografada: {}\nPalavra descriptografada: {}".format(
-        cod_word,
-        decode_word
-    ))
+    os.remove(filename)
+
+    with open(filename, 'w') as file:
+        file.write(text_encoded)
 
 
 if __name__ == '__main__':
